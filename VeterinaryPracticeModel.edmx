@@ -4,11 +4,201 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl" Namespace="VeterinaryPracticeModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2005">
-        <EntityContainer Name="VeterinaryPracticeModelTargetContainer" >
-        </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="VeterinaryPracticeModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="VeterinaryPracticeModelStoreContainer">
+    <EntitySet Name="Owners" EntityType="VeterinaryPracticeModel.Store.Owners" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Pets" EntityType="VeterinaryPracticeModel.Store.Pets" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Practices" EntityType="VeterinaryPracticeModel.Store.Practices" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Vets" EntityType="VeterinaryPracticeModel.Store.Vets" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Visits" EntityType="VeterinaryPracticeModel.Store.Visits" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Treatments" EntityType="VeterinaryPracticeModel.Store.Treatments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Medications" EntityType="VeterinaryPracticeModel.Store.Medications" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="VisitMedication" EntityType="VeterinaryPracticeModel.Store.VisitMedication" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="PracticeVet" Association="VeterinaryPracticeModel.Store.PracticeVet">
+      <End Role="Practice" EntitySet="Practices" />
+      <End Role="Vet" EntitySet="Vets" />
+    </AssociationSet>
+    <AssociationSet Name="OwnerPet" Association="VeterinaryPracticeModel.Store.OwnerPet">
+      <End Role="Owner" EntitySet="Owners" />
+      <End Role="Pet" EntitySet="Pets" />
+    </AssociationSet>
+    <AssociationSet Name="PetVisit" Association="VeterinaryPracticeModel.Store.PetVisit">
+      <End Role="Pet" EntitySet="Pets" />
+      <End Role="Visit" EntitySet="Visits" />
+    </AssociationSet>
+    <AssociationSet Name="VetVisit" Association="VeterinaryPracticeModel.Store.VetVisit">
+      <End Role="Vet" EntitySet="Vets" />
+      <End Role="Visit" EntitySet="Visits" />
+    </AssociationSet>
+    <AssociationSet Name="VisitTreatment" Association="VeterinaryPracticeModel.Store.VisitTreatment">
+      <End Role="Visit" EntitySet="Visits" />
+      <End Role="Treatment" EntitySet="Treatments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VisitMedication_Visit" Association="VeterinaryPracticeModel.Store.FK_VisitMedication_Visit">
+      <End Role="Visit" EntitySet="Visits" />
+      <End Role="VisitMedication" EntitySet="VisitMedication" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VisitMedication_Medication" Association="VeterinaryPracticeModel.Store.FK_VisitMedication_Medication">
+      <End Role="Medication" EntitySet="Medications" />
+      <End Role="VisitMedication" EntitySet="VisitMedication" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Owners">
+    <Key>
+      <PropertyRef Name="OwnerId" />
+    </Key>
+    <Property Name="OwnerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Firstname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="EmailAddress" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pets">
+    <Key>
+      <PropertyRef Name="PetId" />
+    </Key>
+    <Property Name="PetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Breed" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="OwnerOwnerId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Practices">
+    <Key>
+      <PropertyRef Name="RegNum" />
+    </Key>
+    <Property Name="RegNum" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Vets">
+    <Key>
+      <PropertyRef Name="VetId" />
+    </Key>
+    <Property Name="VetId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Firstname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PracticeRegNum" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Visits">
+    <Key>
+      <PropertyRef Name="VisitId" />
+    </Key>
+    <Property Name="VisitId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Reason" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PetPetId" Type="int" Nullable="false" />
+    <Property Name="VetVetId" Type="int" Nullable="false" />
+    <Property Name="Treatment_TreatmentId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Treatments">
+    <Key>
+      <PropertyRef Name="TreatmentId" />
+    </Key>
+    <Property Name="TreatmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Medications">
+    <Key>
+      <PropertyRef Name="MedicationId" />
+    </Key>
+    <Property Name="MedicationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Cost" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VisitMedication">
+    <Key>
+      <PropertyRef Name="Visits_VisitId" />
+      <PropertyRef Name="Medications_MedicationId" />
+    </Key>
+    <Property Name="Visits_VisitId" Type="int" Nullable="false" />
+    <Property Name="Medications_MedicationId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="PracticeVet">
+    <End Role="Practice" Type="VeterinaryPracticeModel.Store.Practices" Multiplicity="1" />
+    <End Role="Vet" Type="VeterinaryPracticeModel.Store.Vets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Practice">
+        <PropertyRef Name="RegNum" />
+      </Principal>
+      <Dependent Role="Vet">
+        <PropertyRef Name="PracticeRegNum" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OwnerPet">
+    <End Role="Owner" Type="VeterinaryPracticeModel.Store.Owners" Multiplicity="1" />
+    <End Role="Pet" Type="VeterinaryPracticeModel.Store.Pets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Owner">
+        <PropertyRef Name="OwnerId" />
+      </Principal>
+      <Dependent Role="Pet">
+        <PropertyRef Name="OwnerOwnerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PetVisit">
+    <End Role="Pet" Type="VeterinaryPracticeModel.Store.Pets" Multiplicity="1" />
+    <End Role="Visit" Type="VeterinaryPracticeModel.Store.Visits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pet">
+        <PropertyRef Name="PetId" />
+      </Principal>
+      <Dependent Role="Visit">
+        <PropertyRef Name="PetPetId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="VetVisit">
+    <End Role="Vet" Type="VeterinaryPracticeModel.Store.Vets" Multiplicity="1" />
+    <End Role="Visit" Type="VeterinaryPracticeModel.Store.Visits" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Vet">
+        <PropertyRef Name="VetId" />
+      </Principal>
+      <Dependent Role="Visit">
+        <PropertyRef Name="VetVetId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="VisitTreatment">
+    <End Role="Visit" Type="VeterinaryPracticeModel.Store.Visits" Multiplicity="*" />
+    <End Role="Treatment" Type="VeterinaryPracticeModel.Store.Treatments" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Treatment">
+        <PropertyRef Name="TreatmentId" />
+      </Principal>
+      <Dependent Role="Visit">
+        <PropertyRef Name="Treatment_TreatmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VisitMedication_Visit">
+    <End Role="Visit" Type="VeterinaryPracticeModel.Store.Visits" Multiplicity="1" />
+    <End Role="VisitMedication" Type="VeterinaryPracticeModel.Store.VisitMedication" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Visit">
+        <PropertyRef Name="VisitId" />
+      </Principal>
+      <Dependent Role="VisitMedication">
+        <PropertyRef Name="Visits_VisitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VisitMedication_Medication">
+    <End Role="VisitMedication" Type="VeterinaryPracticeModel.Store.VisitMedication" Multiplicity="*" />
+    <End Role="Medication" Type="VeterinaryPracticeModel.Store.Medications" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Medication">
+        <PropertyRef Name="MedicationId" />
+      </Principal>
+      <Dependent Role="VisitMedication">
+        <PropertyRef Name="Medications_MedicationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="VeterinaryPracticeModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
@@ -179,13 +369,95 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs" Space="C-S">
-        <Alias Key="Model" Value="VeterinaryPracticeModel" />
-        <Alias Key="Target" Value="VeterinaryPracticeModel.Store" />
-        <EntityContainerMapping CdmEntityContainer="VeterinaryPracticeModelContainer" StorageEntityContainer="VeterinaryPracticeModelTargetContainer">
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="VeterinaryPracticeModelStoreContainer" CdmEntityContainer="VeterinaryPracticeModelContainer">
+    <EntitySetMapping Name="Owners">
+      <EntityTypeMapping TypeName="IsTypeOf(VeterinaryPracticeModel.Owner)">
+        <MappingFragment StoreEntitySet="Owners">
+          <ScalarProperty Name="OwnerId" ColumnName="OwnerId" />
+          <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Pets">
+      <EntityTypeMapping TypeName="IsTypeOf(VeterinaryPracticeModel.Pet)">
+        <MappingFragment StoreEntitySet="Pets">
+          <ScalarProperty Name="PetId" ColumnName="PetId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Breed" ColumnName="Breed" />
+          <ScalarProperty Name="OwnerOwnerId" ColumnName="OwnerOwnerId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Practices">
+      <EntityTypeMapping TypeName="IsTypeOf(VeterinaryPracticeModel.Practice)">
+        <MappingFragment StoreEntitySet="Practices">
+          <ScalarProperty Name="RegNum" ColumnName="RegNum" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Vets">
+      <EntityTypeMapping TypeName="IsTypeOf(VeterinaryPracticeModel.Vet)">
+        <MappingFragment StoreEntitySet="Vets">
+          <ScalarProperty Name="VetId" ColumnName="VetId" />
+          <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="PracticeRegNum" ColumnName="PracticeRegNum" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Visits">
+      <EntityTypeMapping TypeName="IsTypeOf(VeterinaryPracticeModel.Visit)">
+        <MappingFragment StoreEntitySet="Visits">
+          <ScalarProperty Name="VisitId" ColumnName="VisitId" />
+          <ScalarProperty Name="Date" ColumnName="Date" />
+          <ScalarProperty Name="Reason" ColumnName="Reason" />
+          <ScalarProperty Name="PetPetId" ColumnName="PetPetId" />
+          <ScalarProperty Name="VetVetId" ColumnName="VetVetId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Treatments">
+      <EntityTypeMapping TypeName="IsTypeOf(VeterinaryPracticeModel.Treatment)">
+        <MappingFragment StoreEntitySet="Treatments">
+          <ScalarProperty Name="TreatmentId" ColumnName="TreatmentId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Medications">
+      <EntityTypeMapping TypeName="IsTypeOf(VeterinaryPracticeModel.Medication)">
+        <MappingFragment StoreEntitySet="Medications">
+          <ScalarProperty Name="MedicationId" ColumnName="MedicationId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Cost" ColumnName="Cost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="VisitTreatment" TypeName="VeterinaryPracticeModel.VisitTreatment" StoreEntitySet="Visits">
+      <EndProperty Name="Treatment">
+        <ScalarProperty Name="TreatmentId" ColumnName="Treatment_TreatmentId" />
+      </EndProperty>
+      <EndProperty Name="Visit">
+        <ScalarProperty Name="VisitId" ColumnName="VisitId" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="VisitMedication" TypeName="VeterinaryPracticeModel.VisitMedication" StoreEntitySet="VisitMedication">
+      <EndProperty Name="Visit">
+        <ScalarProperty Name="VisitId" ColumnName="Visits_VisitId" />
+      </EndProperty>
+      <EndProperty Name="Medication">
+        <ScalarProperty Name="MedicationId" ColumnName="Medications_MedicationId" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -199,6 +471,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
       </DesignerInfoPropertySet>
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
