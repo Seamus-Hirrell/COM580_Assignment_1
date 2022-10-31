@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7158b020c29e47c6ab5824fb5de355a2" Name="Diagram1" ShowGrid="false" ZoomLevel="151" >
+        <EntityTypeShape EntityType="VeterinaryPracticeModel.Owner" Width="1.75" PointX="3.625" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VeterinaryPracticeModel.Pet" Width="1.75" PointX="6.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VeterinaryPracticeModel.Practice" Width="1.75" PointX="14.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VeterinaryPracticeModel.Vet" Width="1.75" PointX="11.875" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VeterinaryPracticeModel.Visit" Width="1.75" PointX="8.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="VeterinaryPracticeModel.Treatment" Width="1.75" PointX="8.75" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="VeterinaryPracticeModel.Medication" Width="1.75" PointX="8.75" PointY="8.375" IsExpanded="true" />
+        <AssociationConnector Association="VeterinaryPracticeModel.PracticeVet" />
+        <AssociationConnector Association="VeterinaryPracticeModel.OwnerPet" />
+        <AssociationConnector Association="VeterinaryPracticeModel.PetVisit" />
+        <AssociationConnector Association="VeterinaryPracticeModel.VetVisit" />
+        <AssociationConnector Association="VeterinaryPracticeModel.VisitTreatment" />
+        <AssociationConnector Association="VeterinaryPracticeModel.VisitMedication" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
