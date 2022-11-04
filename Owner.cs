@@ -25,8 +25,10 @@ namespace assignment_1
         public string Surname { get; set; }
         public string PhoneNumber { get; set; }
         public string EmailAddress { get; set; }
+        public int PracticeRegNum { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pet> Pets { get; set; }
+        public virtual Practice Practice { get; set; }
     }
 }

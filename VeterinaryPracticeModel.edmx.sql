@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 10/31/2022 19:34:16
+-- Date Created: 11/02/2022 20:41:22
 -- Generated from EDMX file: C:\Users\sicro\source\repos\assignment_1\VeterinaryPracticeModel.edmx
 -- --------------------------------------------------
 
@@ -17,11 +17,59 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_PracticeVet]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Vets] DROP CONSTRAINT [FK_PracticeVet];
+GO
+IF OBJECT_ID(N'[dbo].[FK_OwnerPet]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Pets] DROP CONSTRAINT [FK_OwnerPet];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PetVisit]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Visits] DROP CONSTRAINT [FK_PetVisit];
+GO
+IF OBJECT_ID(N'[dbo].[FK_VetVisit]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Visits] DROP CONSTRAINT [FK_VetVisit];
+GO
+IF OBJECT_ID(N'[dbo].[FK_VisitTreatment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Visits] DROP CONSTRAINT [FK_VisitTreatment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_VisitMedication_Visit]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[VisitMedication] DROP CONSTRAINT [FK_VisitMedication_Visit];
+GO
+IF OBJECT_ID(N'[dbo].[FK_VisitMedication_Medication]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[VisitMedication] DROP CONSTRAINT [FK_VisitMedication_Medication];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PracticeOwner]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Owners] DROP CONSTRAINT [FK_PracticeOwner];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[Owners]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Owners];
+GO
+IF OBJECT_ID(N'[dbo].[Pets]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Pets];
+GO
+IF OBJECT_ID(N'[dbo].[Practices]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Practices];
+GO
+IF OBJECT_ID(N'[dbo].[Vets]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Vets];
+GO
+IF OBJECT_ID(N'[dbo].[Visits]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Visits];
+GO
+IF OBJECT_ID(N'[dbo].[Treatments]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Treatments];
+GO
+IF OBJECT_ID(N'[dbo].[Medications]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Medications];
+GO
+IF OBJECT_ID(N'[dbo].[VisitMedication]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[VisitMedication];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -33,7 +81,8 @@ CREATE TABLE [dbo].[Owners] (
     [Firstname] nvarchar(max)  NOT NULL,
     [Surname] nvarchar(max)  NOT NULL,
     [PhoneNumber] nvarchar(max)  NOT NULL,
-    [EmailAddress] nvarchar(max)  NOT NULL
+    [EmailAddress] nvarchar(max)  NOT NULL,
+    [PracticeRegNum] int  NOT NULL
 );
 GO
 
@@ -250,6 +299,21 @@ GO
 CREATE INDEX [IX_FK_VisitMedication_Medication]
 ON [dbo].[VisitMedication]
     ([Medications_MedicationId]);
+GO
+
+-- Creating foreign key on [PracticeRegNum] in table 'Owners'
+ALTER TABLE [dbo].[Owners]
+ADD CONSTRAINT [FK_PracticeOwner]
+    FOREIGN KEY ([PracticeRegNum])
+    REFERENCES [dbo].[Practices]
+        ([RegNum])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PracticeOwner'
+CREATE INDEX [IX_FK_PracticeOwner]
+ON [dbo].[Owners]
+    ([PracticeRegNum]);
 GO
 
 -- --------------------------------------------------

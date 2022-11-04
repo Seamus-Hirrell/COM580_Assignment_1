@@ -42,6 +42,10 @@
       <End Role="Medication" EntitySet="Medications" />
       <End Role="VisitMedication" EntitySet="VisitMedication" />
     </AssociationSet>
+    <AssociationSet Name="PracticeOwner" Association="VeterinaryPracticeModel.Store.PracticeOwner">
+      <End Role="Practice" EntitySet="Practices" />
+      <End Role="Owner" EntitySet="Owners" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Owners">
     <Key>
@@ -52,6 +56,7 @@
     <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
     <Property Name="PhoneNumber" Type="nvarchar(max)" Nullable="false" />
     <Property Name="EmailAddress" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PracticeRegNum" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Pets">
     <Key>
@@ -174,6 +179,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="PracticeOwner">
+    <End Role="Practice" Type="VeterinaryPracticeModel.Store.Practices" Multiplicity="1" />
+    <End Role="Owner" Type="VeterinaryPracticeModel.Store.Owners" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Practice">
+        <PropertyRef Name="RegNum" />
+      </Principal>
+      <Dependent Role="Owner">
+        <PropertyRef Name="PracticeRegNum" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_VisitMedication_Visit">
     <End Role="Visit" Type="VeterinaryPracticeModel.Store.Visits" Multiplicity="1" />
     <End Role="VisitMedication" Type="VeterinaryPracticeModel.Store.VisitMedication" Multiplicity="*" />
@@ -234,6 +251,10 @@
             <End Role="Visit" EntitySet="Visits" />
             <End Role="Medication" EntitySet="Medications" />
           </AssociationSet>
+          <AssociationSet Name="PracticeOwner" Association="VeterinaryPracticeModel.PracticeOwner">
+            <End Role="Practice" EntitySet="Practices" />
+            <End Role="Owner" EntitySet="Owners" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Owner">
           <Key>
@@ -245,6 +266,8 @@
           <Property Name="PhoneNumber" Type="String" Nullable="false" />
           <Property Name="EmailAddress" Type="String" Nullable="false" />
           <NavigationProperty Name="Pets" Relationship="VeterinaryPracticeModel.OwnerPet" FromRole="Owner" ToRole="Pet" />
+          <NavigationProperty Name="Practice" Relationship="VeterinaryPracticeModel.PracticeOwner" FromRole="Owner" ToRole="Practice" />
+          <Property Name="PracticeRegNum" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Pet">
           <Key>
@@ -266,6 +289,7 @@
           <Property Name="Name" Type="String" Nullable="false" />
           <Property Name="Address" Type="String" Nullable="false" />
           <NavigationProperty Name="Vets" Relationship="VeterinaryPracticeModel.PracticeVet" FromRole="Practice" ToRole="Vet" />
+          <NavigationProperty Name="Owners" Relationship="VeterinaryPracticeModel.PracticeOwner" FromRole="Practice" ToRole="Owner" />
         </EntityType>
         <EntityType Name="Vet">
           <Key>
@@ -365,6 +389,18 @@
           <End Type="VeterinaryPracticeModel.Visit" Role="Visit" Multiplicity="*" />
           <End Type="VeterinaryPracticeModel.Medication" Role="Medication" Multiplicity="*" />
         </Association>
+        <Association Name="PracticeOwner">
+          <End Type="VeterinaryPracticeModel.Practice" Role="Practice" Multiplicity="1" />
+          <End Type="VeterinaryPracticeModel.Owner" Role="Owner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Practice">
+              <PropertyRef Name="RegNum" />
+            </Principal>
+            <Dependent Role="Owner">
+              <PropertyRef Name="PracticeRegNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -379,6 +415,7 @@
           <ScalarProperty Name="Surname" ColumnName="Surname" />
           <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
           <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="PracticeRegNum" ColumnName="PracticeRegNum" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

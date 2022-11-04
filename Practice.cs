@@ -18,6 +18,7 @@ namespace assignment_1
         public Practice()
         {
             this.Vets = new HashSet<Vet>();
+            this.Owners = new HashSet<Owner>();
         }
     
         public int RegNum { get; set; }
@@ -26,5 +27,7 @@ namespace assignment_1
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vet> Vets { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Owner> Owners { get; set; }
     }
 }
